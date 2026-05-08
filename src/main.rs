@@ -11,18 +11,17 @@ enum MenuChoices {
 }
 
 #[cfg(target_os = "windows")]
-fn user_choice() -> io::Result<MenuChoices> {
+fn user_choice(input: &mut str) -> io::Result<MenuChoices> {
     loop {
-        println!("Windows 11 Context Menu Switcher");
-        println!(
-            "(the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)"
-        );
-        println!(
-            "Please select an option:\n\n1) Deploy Windows 10 Context Menu.\t2) Revert to Windows 11 Context Menu.\t0) Exit and do nothing.\n\n"
-        );
-        println!("Enter your choice:");
-        let mut input = String::new();
-        io::stdin().read_line(&mut input)?;
+        println!(r#"Windows 11 Context Menu Switcher
+(the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
+Please select an option:
+    1) Deploy Windows 10 Context Menu.
+    2) Revert to Windows 11 Context Menu.
+    0) Exit and do nothing.
+
+Enter your choice:"#);
+        io::stdin().read_line(input)?;
 
         match input.trim() {
             "1" => return Ok(MenuChoices::DeployW10),
@@ -56,10 +55,8 @@ fn w11_menu_style() -> io::Result<()> {
             "/f",
         ])
         .status()?;
-
-    restart_explorer()?;
-
-    Ok(())
+    // Forward the last result
+    restart_explorer()
 }
 
 fn w10_menu_style() -> io::Result<()> {
@@ -69,40 +66,36 @@ fn w10_menu_style() -> io::Result<()> {
             "/f",
             "/ve"])
         .status()?;
-
-    restart_explorer()?;
-
-    Ok(())
+    // Forward the last result
+    restart_explorer()
 }
 
 fn key_checker() -> io::Result<bool> {
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
-    match hkcu.open_subkey("Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}") {
-        Ok(_) => Ok(true),
-        Err(e) => {
-            if e.kind() == io::ErrorKind::NotFound {
-                Ok(false)
-            } else {
-                Err(e)
-            }
-        }
+    if let Err(e) = hkcu.open_subkey("Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}") {
+        return match e.kind() {
+            io::ErrorKind::NotFound => Ok(false),
+            _ => Err(e)
+        };
     }
+    
+    Ok(true)
 }
 
 fn version_checker() -> io::Result<()> {
     if OsVersion::current().build <= WIN_11_MIN_VERSION {
-        return Err(io::Error::new(
-            io::ErrorKind::Other,
-            "Not running Windows11: no need to change the context menu. Aborting...",
+        return Err(io::Error::other(
+            "Not running Windows 11: no need to change the context menu. Aborting...",
         ));
-    } else {
-        return Ok(());
     }
+    
+    Ok(())
 }
 
 fn main() -> io::Result<()> {
     version_checker()?;
-    match user_choice()? {
+    let mut input = String::new();
+    match user_choice(&mut input)? {
         MenuChoices::DeployW10 => {
             if key_checker()? {
                 println!("Patch already applied!");
@@ -111,18 +104,15 @@ fn main() -> io::Result<()> {
             }
         }
         MenuChoices::DeployW11 => {
-            //do something;
             w11_menu_style()?;
         }
         MenuChoices::Exit => {
-            //do something
             return Ok(());
         }
     }
 
     println!("Press ENTER to exit...");
-    let mut quit = String::new();
-    io::stdin().read_line(&mut quit)?;
+    io::stdin().read_line(&mut input)?;
 
     Ok(())
 }
