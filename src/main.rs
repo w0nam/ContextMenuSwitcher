@@ -11,16 +11,19 @@ enum MenuChoices {
 }
 
 #[cfg(target_os = "windows")]
-fn user_choice(input: &mut str) -> io::Result<MenuChoices> {
+// Used '&mut String' instead of '&mut str' was throwing an error otherwise.
+fn user_choice(input: &mut String) -> io::Result<MenuChoices> {
     loop {
-        println!(r#"Windows 11 Context Menu Switcher
+        println!(
+            r#"Windows 11 Context Menu Switcher
 (the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
 Please select an option:
     1) Deploy Windows 10 Context Menu.
     2) Revert to Windows 11 Context Menu.
     0) Exit and do nothing.
 
-Enter your choice:"#);
+Enter your choice:"#
+        );
         io::stdin().read_line(input)?;
 
         match input.trim() {
@@ -72,13 +75,15 @@ fn w10_menu_style() -> io::Result<()> {
 
 fn key_checker() -> io::Result<bool> {
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
-    if let Err(e) = hkcu.open_subkey("Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}") {
+    if let Err(e) =
+        hkcu.open_subkey("Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")
+    {
         return match e.kind() {
             io::ErrorKind::NotFound => Ok(false),
-            _ => Err(e)
+            _ => Err(e),
         };
     }
-    
+
     Ok(true)
 }
 
@@ -88,7 +93,7 @@ fn version_checker() -> io::Result<()> {
             "Not running Windows 11: no need to change the context menu. Aborting...",
         ));
     }
-    
+
     Ok(())
 }
 
