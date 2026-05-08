@@ -12,5 +12,5 @@ A Rust written CLI program, that aim at making switching between Windows 11 & Wi
 * Recommend some features you would like :)
 
 ### Keep in mind that I am not a professional developper, not even an amateur one.
-I'm just an hobbyist programming for fun. My program aim to be safe and full of failsafe, though I am relying on Rust Docs and my own computer knowledge to do so.
+I'm just an hobbyist programming for fun. My program aim to be safe and simples, though I am relying on Rust Docs and my own computer knowledge to do so.
 Feel free to review my source code, let's chat about it !
