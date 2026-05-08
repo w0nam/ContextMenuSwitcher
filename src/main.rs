@@ -16,7 +16,9 @@ fn user_choice(input: &mut String) -> io::Result<MenuChoices> {
     loop {
         println!(
             r#"Windows 11 Context Menu Switcher
+
 (the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
+
 Please select an option:
     1) Deploy Windows 10 Context Menu.
     2) Revert to Windows 11 Context Menu.
@@ -99,7 +101,7 @@ fn version_checker() -> io::Result<()> {
 
 fn main() -> io::Result<()> {
     version_checker()?;
-    let mut input = String::new();
+    let mut input = String::with_capacity(1);
     match user_choice(&mut input)? {
         MenuChoices::DeployW10 => {
             if key_checker()? {
@@ -112,6 +114,9 @@ fn main() -> io::Result<()> {
             w11_menu_style()?;
         }
         MenuChoices::Exit => {
+            // Added some text when the user want to quit out.
+            println!("Alright, bye-bye!");
+            std::thread::sleep(std::time::Duration::from_millis(500));
             return Ok(());
         }
     }
