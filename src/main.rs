@@ -15,7 +15,7 @@ fn user_choice() -> io::Result<MenuChoices> {
     loop {
         println!("Windows 11 Context Menu Switcher");
         println!(
-            "(the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)\n"
+            "(the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)"
         );
         println!(
             "Please select an option:\n\n1) Deploy Windows 10 Context Menu.\t2) Revert to Windows 11 Context Menu.\t0) Exit and do nothing.\n\n"
@@ -35,6 +35,7 @@ fn user_choice() -> io::Result<MenuChoices> {
         }
     }
 }
+
 fn restart_explorer() -> io::Result<()> {
     Command::new("taskkill")
         .args(["/F", "/IM", "explorer.exe"])
@@ -46,6 +47,7 @@ fn restart_explorer() -> io::Result<()> {
 
     Ok(())
 }
+
 fn w11_menu_style() -> io::Result<()> {
     Command::new("REG.exe")
         .args([
