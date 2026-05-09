@@ -1,8 +1,4 @@
-// use crossterm::{
-//     execute,
-//     terminal::{self, ClearType},
-// };
-use std::{process::Command, *}; //, Stdout};
+use std::{io, process::Command, *};
 use windows_version::*;
 use winreg::{RegKey, enums::HKEY_CURRENT_USER};
 
@@ -38,20 +34,11 @@ Enter your choice:"#
             "0" => return Ok(MenuChoices::Exit),
             _ => {
                 println!("Invalid input, try again.");
-                input.clear();
                 continue;
             }
         }
     }
 }
-
-// Still don't quite understand how to properly flush the buffer of stdout();
-// fn clear_terminal(term_buff: Stdout) -> io::Result<()> {
-//     let mut w = term_buff;
-//     execute!(w, terminal::Clear(ClearType::FromCursorUp))?;
-
-//     Ok(())
-// }
 
 fn restart_explorer() -> io::Result<()> {
     Command::new("taskkill")
@@ -115,35 +102,22 @@ fn version_checker() -> io::Result<()> {
 fn main() -> io::Result<()> {
     version_checker()?;
     let mut input = String::with_capacity(1);
-    loop {
-        match user_choice(&mut input)? {
-            MenuChoices::DeployW10 => {
-                if key_checker()? {
-                    println!("Patch already applied, returning to main menu.");
-                    input.clear();
-                    std::thread::sleep(std::time::Duration::from_millis(500));
-                } else {
-                    w10_menu_style()?;
-                    input.clear();
-                    continue;
-                }
+    match user_choice(&mut input)? {
+        MenuChoices::DeployW10 => {
+            if key_checker()? {
+                println!("Patch already applied!");
+            } else {
+                w10_menu_style()?;
             }
-            MenuChoices::DeployW11 => {
-                if !key_checker()? {
-                    println!("Patch already reverted, returning to main menu.");
-                    input.clear();
-                    std::thread::sleep(std::time::Duration::from_millis(500));
-                } else {
-                    w11_menu_style()?;
-                    input.clear();
-                    // clear_terminal(io::stdout())?;
-                    continue;
-                }
-            }
-            MenuChoices::Exit => {
-                println!("Alrighty boss...");
-                break;
-            }
+        }
+        MenuChoices::DeployW11 => {
+            w11_menu_style()?;
+        }
+        MenuChoices::Exit => {
+            // Added some text when the user want to quit out.
+            println!("Alright, bye-bye!");
+            std::thread::sleep(std::time::Duration::from_millis(500));
+            return Ok(());
         }
     }
 
