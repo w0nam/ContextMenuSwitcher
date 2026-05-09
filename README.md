@@ -11,6 +11,7 @@ A Rust written CLI program, that aim at making switching between Windows 11 & Wi
 
 ## What I will add in the future:
 * Saving RegEdit config to user desired location, with user chosen name.
+* Hot reloading the shell, would be handy to be able to do so without applying/reverting any patches!
 * Recommend some features you would like :)
 
 ### Keep in mind that I am not a professional developper, not even an amateur one.
