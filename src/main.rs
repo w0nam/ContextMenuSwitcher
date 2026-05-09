@@ -1,8 +1,4 @@
-// use crossterm::{
-//     execute,
-//     terminal::{self, ClearType},
-// };
-use std::{process::Command, *}; //, Stdout};
+use std::{process::Command, *};
 use windows_version::*;
 use winreg::{RegKey, enums::HKEY_CURRENT_USER};
 
@@ -44,14 +40,6 @@ Enter your choice:"#
         }
     }
 }
-
-// Still don't quite understand how to properly flush the buffer of stdout();
-// fn clear_terminal(term_buff: Stdout) -> io::Result<()> {
-//     let mut w = term_buff;
-//     execute!(w, terminal::Clear(ClearType::FromCursorUp))?;
-
-//     Ok(())
-// }
 
 fn restart_explorer() -> io::Result<()> {
     Command::new("taskkill")
