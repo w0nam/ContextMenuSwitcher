@@ -15,9 +15,9 @@ enum MenuChoices {
 fn user_choice(input: &mut String) -> io::Result<MenuChoices> {
     loop {
         println!(
-            r#"Windows 11 Context Menu Switcher
+            r#"// WINDOWS 11 CONTEXT MENU SWITCHER
 
-(the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
+(PSA: the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
 
 Please select an option:
     1) Deploy Windows 10 Context Menu.
