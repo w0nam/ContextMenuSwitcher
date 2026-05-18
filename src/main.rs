@@ -87,7 +87,7 @@ fn save_reg_key() -> io::Result<()> {
     Command::new("REG.EXE")
         .args(["EXPORT", key_path, "backup.reg"])
         .status()?;
-    // forward the last result.
+    // Forward the last result
     restart_explorer()
 }
 
@@ -118,13 +118,13 @@ fn version_checker() -> io::Result<()> {
 
 fn main() -> io::Result<()> {
     version_checker()?;
-    // Bumped the capacity from "1" to "8", misread the function arguments.
+    // Bumped the capacity from "1" to "8", misread the function arguments. Function takes usize, not char.
     let mut input = String::with_capacity(8);
     loop {
         match user_choice(&mut input)? {
             MenuChoices::DeployW10 => {
                 if key_checker()? {
-                    println!("Patch already applied, returning to main menu.");
+                    println!("Patch already applied, returning to main menu.\n");
                     input.clear();
                     std::thread::sleep(std::time::Duration::from_millis(500));
                 } else {
@@ -141,7 +141,6 @@ fn main() -> io::Result<()> {
                 } else {
                     w11_menu_style()?;
                     input.clear();
-                    // clear_terminal(io::stdout())?;
                     continue;
                 }
             }
