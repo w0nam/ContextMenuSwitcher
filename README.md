@@ -10,6 +10,9 @@ A Rust written CLI program, that aim at making switching between Windows 11 & Wi
 * Saving RegEdit config ~~to user desired location, with user chosen name.~~
 * Empty reloading the shell, by restarting "**explorer.exe**" without applying/reverting any patch.
 
+## Demo of the functionalities:
+![](https://github.com/w0nam/ContextMenuSwitcher/blob/main/assets/CMS_demo.gif)
+
 ## What I will add in the future:
 * Recommend some features you would like :)
 
