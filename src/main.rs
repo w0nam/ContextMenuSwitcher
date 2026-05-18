@@ -106,10 +106,7 @@ fn key_checker() -> io::Result<bool> {
 }
 
 fn version_checker() -> io::Result<()> {
-<<<<<<< HEAD
     // change from "current().build <= WIN_11" to "current().build < WIN_11.." since v22000 is windows 11.
-=======
->>>>>>> 80286c06bdf07a2fbe8bd6022bd0d60ba6b1ec60
     if OsVersion::current().build < WIN_11_MIN_VERSION {
         return Err(io::Error::other(
             "Not running Windows 11: no need to change the context menu. Aborting...",
