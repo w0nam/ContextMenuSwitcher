@@ -5,11 +5,10 @@ A Rust written CLI program, that aim at making switching between Windows 11 & Wi
 
 ## Functionalities:
 * Restore the Windows 10 context menu by adding a key in the RegEdit.
-* Can revert back to Windows 11 context menu by deleting the key in RegEdit.
-* Multiple Failsafe throughout the program, safety first.
+* Can revert back to Windows 11 context menu by deleting the newly added key in RegEdit.
 * Reload "explorer.exe" to apply the patch on-the-fly: **No need to reboot !**
 * Saving RegEdit config ~~to user desired location, with user chosen name.~~
-* Hot reloading the shell, would be handy to be able to do so without applying/reverting any patches!
+* Empty reloading the shell, by restarting "**explorer.exe**" without applying/reverting any patch.
 
 ## What I will add in the future:
 * Recommend some features you would like :)
