@@ -1,3 +1,4 @@
+// Build file to add my icon.
 use {
     std::{env, io},
     winresource::WindowsResource,
