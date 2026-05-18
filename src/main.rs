@@ -7,6 +7,8 @@ const WIN_11_MIN_VERSION: u32 = 22000; // Lowest build number of W11, lower than
 enum MenuChoices {
     DeployW10,
     DeployW11,
+    SaveRegEdit,
+    ReloadExplorer,
     Exit,
 }
 
@@ -17,11 +19,13 @@ fn user_choice(input: &mut String) -> io::Result<MenuChoices> {
         println!(
             r#"// WINDOWS 11 CONTEXT MENU SWITCHER
 
-(PSA: the program will restart explorer.exe for the patch to be applied on-the-fly, screen flashing is normal.)
+(PSA: the program will restart "explorer.exe" for the patch to be applied on-the-fly, taskbar flashing is normal.)
 
 Please select an option:
-    1) Deploy Windows 10 Context Menu.
-    2) Revert to Windows 11 Context Menu.
+    1) Deploy Windows 10 Context Menu (old school right-click menu).
+    2) Revert to Windows 11 Context Menu (new right-click menu).
+    3) Use reg.exe and save your clean registry key (recommended).
+    4) Empty reload the "explorer.exe" task.
     0) Exit and do nothing.
 
 Enter your choice:"#
@@ -31,6 +35,8 @@ Enter your choice:"#
         match input.trim() {
             "1" => return Ok(MenuChoices::DeployW10),
             "2" => return Ok(MenuChoices::DeployW11),
+            "3" => return Ok(MenuChoices::SaveRegEdit),
+            "4" => return Ok(MenuChoices::ReloadExplorer),
             "0" => return Ok(MenuChoices::Exit),
             _ => {
                 println!("Invalid input, try again.");
@@ -76,6 +82,15 @@ fn w10_menu_style() -> io::Result<()> {
     restart_explorer()
 }
 
+fn save_reg_key() -> io::Result<()> {
+    let key_path: &str = "HKCU\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}";
+    Command::new("REG.EXE")
+        .args(["EXPORT", key_path, "backup.reg"])
+        .status()?;
+    // forward the last result.
+    restart_explorer()
+}
+
 fn key_checker() -> io::Result<bool> {
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
     if let Err(e) =
@@ -91,7 +106,8 @@ fn key_checker() -> io::Result<bool> {
 }
 
 fn version_checker() -> io::Result<()> {
-    if OsVersion::current().build <= WIN_11_MIN_VERSION {
+    // change from "current().build <= WIN_11" to "current().build < WIN_11.." since v22000 is windows 11.
+    if OsVersion::current().build < WIN_11_MIN_VERSION {
         return Err(io::Error::other(
             "Not running Windows 11: no need to change the context menu. Aborting...",
         ));
@@ -127,6 +143,16 @@ fn main() -> io::Result<()> {
                     // clear_terminal(io::stdout())?;
                     continue;
                 }
+            }
+            MenuChoices::SaveRegEdit => {
+                save_reg_key()?;
+                input.clear();
+                continue;
+            }
+            MenuChoices::ReloadExplorer => {
+                restart_explorer()?;
+                input.clear();
+                continue;
             }
             MenuChoices::Exit => {
                 println!("Alrighty boss...");
