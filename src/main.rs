@@ -135,7 +135,7 @@ fn main() -> io::Result<()> {
             }
             MenuChoices::DeployW11 => {
                 if !key_checker()? {
-                    println!("Patch already reverted, returning to main menu.");
+                    println!("Patch already reverted, returning to main menu.\n");
                     input.clear();
                     std::thread::sleep(std::time::Duration::from_millis(500));
                 } else {
