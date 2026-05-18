@@ -83,7 +83,7 @@ fn w10_menu_style() -> io::Result<()> {
 }
 
 fn save_reg_key() -> io::Result<()> {
-    let key_path: &str = "HKCU\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}";
+    let key_path: &str = "HKCU\\Software\\Classes\\CLSID";
     Command::new("REG.EXE")
         .args(["EXPORT", key_path, "backup.reg"])
         .status()?;
