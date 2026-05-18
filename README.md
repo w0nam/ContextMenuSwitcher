@@ -8,7 +8,7 @@ A Rust written CLI program, that aim at making switching between Windows 11 & Wi
 * Can revert back to Windows 11 context menu by deleting the key in RegEdit.
 * Multiple Failsafe throughout the program, safety first.
 * Reload "explorer.exe" to apply the patch on-the-fly: **No need to reboot !**
-* * Saving RegEdit config to user desired location, with user chosen name.
+* Saving RegEdit config ~~to user desired location, with user chosen name.~~
 * Hot reloading the shell, would be handy to be able to do so without applying/reverting any patches!
 
 ## What I will add in the future:
