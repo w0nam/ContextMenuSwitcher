@@ -61,11 +61,7 @@ fn restart_explorer() -> io::Result<()> {
 
 fn w11_menu_style() -> io::Result<()> {
     Command::new("REG.exe")
-        .args([
-            "delete",
-            "HKCU\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}",
-            "/f",
-        ])
+        .args(["delete", ",", "/f"])
         .status()?;
     // Forward the last result
     restart_explorer()
@@ -106,10 +102,7 @@ fn key_checker() -> io::Result<bool> {
 }
 
 fn version_checker() -> io::Result<()> {
-<<<<<<< HEAD
     // change from "current().build <= WIN_11" to "current().build < WIN_11.." since v22000 is windows 11.
-=======
->>>>>>> 80286c06bdf07a2fbe8bd6022bd0d60ba6b1ec60
     if OsVersion::current().build < WIN_11_MIN_VERSION {
         return Err(io::Error::other(
             "Not running Windows 11: no need to change the context menu. Aborting...",
