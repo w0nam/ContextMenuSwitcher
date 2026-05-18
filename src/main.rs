@@ -118,7 +118,8 @@ fn version_checker() -> io::Result<()> {
 
 fn main() -> io::Result<()> {
     version_checker()?;
-    let mut input = String::with_capacity(1);
+    // Bumped the capacity from "1" to "8", misread the function arguments.
+    let mut input = String::with_capacity(8);
     loop {
         match user_choice(&mut input)? {
             MenuChoices::DeployW10 => {
