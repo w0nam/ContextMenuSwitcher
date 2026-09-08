@@ -4,7 +4,6 @@ use winreg::{RegKey, enums::HKEY_CURRENT_USER};
 
 const WIN_11_MIN_VERSION: u32 = 22000; // Lowest build number of W11, lower than that would be W10
 
-// Comment just to push on my WSL machine (testing git login on WSL)
 enum MenuChoices {
     DeployW10,
     DeployW11,
@@ -167,3 +166,4 @@ fn main() -> io::Result<()> {
 
     Ok(())
 }
+// TODO: Break the project in multiple source files, to make it easier to reuse / debug code.
