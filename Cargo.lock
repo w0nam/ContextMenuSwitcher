@@ -3,19 +3,19 @@
 version = 4
 
 [[package]]
-name = "ContextMenuSwitcher"
-version = "1.1.0"
+name = "cfg-if"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
+
+[[package]]
+name = "context_menu_switcher"
+version = "1.1.5"
 dependencies = [
  "windows-version",
  "winreg",
  "winresource",
 ]
-
-[[package]]
-name = "cfg-if"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
 
 [[package]]
 name = "equivalent"
