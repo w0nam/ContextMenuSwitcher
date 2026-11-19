@@ -1,4 +1,5 @@
 use context_menu_switcher::helloworld;
+use context_menu_switcher::main_gui;
 use std::{process::Command, *};
 use windows_version::*;
 use winreg::{RegKey, enums::HKEY_CURRENT_USER};
@@ -11,9 +12,9 @@ enum MenuChoices {
     SaveRegEdit,
     ReloadExplorer,
     PrintHello,
+    DrawWindow,
     Exit,
 }
-
 //TODO - Implement a "language chooser" functionality
 
 #[cfg(target_os = "windows")]
@@ -30,7 +31,8 @@ Please select an option:
     2) Revert to Windows 11 Context Menu (new right-click menu).
     3) Use reg.exe and save your clean registry key (recommended).
     4) Empty reload the "explorer.exe" task.
-    5) print "Hello World", to test the multiple file implementation.
+    5) Print "Hello World", to test the multiple file implementation.
+    6) Draw out a window to test out GPUI implementation
     0) Exit and do nothing.
 
 Enter your choice:"#
@@ -43,6 +45,7 @@ Enter your choice:"#
             "3" => return Ok(MenuChoices::SaveRegEdit),
             "4" => return Ok(MenuChoices::ReloadExplorer),
             "5" => return Ok(MenuChoices::PrintHello),
+            "6" => return Ok(MenuChoices::DrawWindow),
             "0" => return Ok(MenuChoices::Exit),
             _ => {
                 println!("Invalid input, try again.");
@@ -51,6 +54,10 @@ Enter your choice:"#
             }
         }
     }
+}
+
+fn draw_window() {
+    main_gui::start_window();
 }
 
 fn restart_explorer() -> io::Result<()> {
@@ -167,6 +174,11 @@ fn main() -> io::Result<()> {
             }
             MenuChoices::PrintHello => {
                 helloworld::test_hello_world();
+                input.clear();
+                continue;
+            }
+            MenuChoices::DrawWindow => {
+                main_gui::start_window();
                 input.clear();
                 continue;
             }
