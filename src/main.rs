@@ -1,5 +1,4 @@
-use context_menu_switcher::helloworld;
-use context_menu_switcher::main_gui;
+//use context_menu_switcher::gui;
 use std::{process::Command, *};
 use windows_version::*;
 use winreg::{RegKey, enums::HKEY_CURRENT_USER};
