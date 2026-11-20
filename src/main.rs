@@ -10,8 +10,6 @@ enum MenuChoices {
     DeployW11,
     SaveRegEdit,
     ReloadExplorer,
-    PrintHello,
-    DrawWindow,
     Exit,
 }
 //TODO - Implement a "language chooser" functionality
@@ -43,8 +41,6 @@ Enter your choice:"#
             "2" => return Ok(MenuChoices::DeployW11),
             "3" => return Ok(MenuChoices::SaveRegEdit),
             "4" => return Ok(MenuChoices::ReloadExplorer),
-            "5" => return Ok(MenuChoices::PrintHello),
-            "6" => return Ok(MenuChoices::DrawWindow),
             "0" => return Ok(MenuChoices::Exit),
             _ => {
                 println!("Invalid input, try again.");
@@ -53,10 +49,6 @@ Enter your choice:"#
             }
         }
     }
-}
-
-fn draw_window() {
-    main_gui::start_window();
 }
 
 fn restart_explorer() -> io::Result<()> {
@@ -168,16 +160,6 @@ fn main() -> io::Result<()> {
             }
             MenuChoices::ReloadExplorer => {
                 restart_explorer()?;
-                input.clear();
-                continue;
-            }
-            MenuChoices::PrintHello => {
-                helloworld::test_hello_world();
-                input.clear();
-                continue;
-            }
-            MenuChoices::DrawWindow => {
-                main_gui::start_window();
                 input.clear();
                 continue;
             }
