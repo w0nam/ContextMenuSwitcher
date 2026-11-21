@@ -1,17 +1,36 @@
-//use gpui::*;
+use gpui::*;
 
-//const WINDOW_TITLE: &str = "Context Menu Switcher";
+struct HelloWorld {
+    text: SharedString,
+}
 
-//struct Window {
-//title: &str,
-//}
+impl Render for HelloWorld {
+    fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
+        div()
+            .flex()
+            .bg(rgb(0x00000))
+            .size(px(300.0))
+            .justify_center()
+            .text_lg()
+            .text_color(rgb(0xFFFFFF))
+            .child(format!("TEST {}", &self.text))
+    }
+}
 
-//impl Render for Window {
-//    fn render(&mut self, window: &mut gpui::Window, cx: &mut Context<Self>) -> impl IntoElement {}
-//}
-
-//pub fn start_window() {
-//    Application::new().run(|_cx: &mut App| {
-// Proper way is to declare a struct, implement rendering for sayed struct and call it inside a function.
-//    });
-//}
+pub fn run_window() {
+    Application::new().run(|cx: &mut App| {
+        let bounds = Bounds::centered(None, size(px(5.0), px(500.0)), cx);
+        cx.open_window(
+            WindowOptions {
+                window_bounds: Some(WindowBounds::Windowed(bounds)),
+                ..Default::default()
+            },
+            |_, cx| {
+                cx.new(|_| HelloWorld {
+                    text: "Context Menu Switcher".into(),
+                })
+            },
+        )
+        .unwrap();
+    });
+}
