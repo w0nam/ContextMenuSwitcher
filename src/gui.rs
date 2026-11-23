@@ -23,6 +23,7 @@ pub fn run_window() {
         cx.open_window(
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
+                //titlebar: Option<TitlebarOptions>,
                 ..Default::default()
             },
             |_, cx| {
