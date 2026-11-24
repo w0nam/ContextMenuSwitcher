@@ -7,9 +7,9 @@ struct HelloWorld {
 impl Render for HelloWorld {
     fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement {
         div()
+            .bg(rgba(0x000001FF))
+            .size(px(500.0))
             .flex()
-            .bg(rgb(0x00000))
-            .size(px(300.0))
             .justify_center()
             .text_lg()
             .text_color(rgb(0xFFFFFF))
@@ -28,7 +28,7 @@ pub fn run_window() {
             },
             |_, cx| {
                 cx.new(|_| HelloWorld {
-                    text: "Context Menu Switcher".into(),
+                    text: "📖".into()
                 })
             },
         )
