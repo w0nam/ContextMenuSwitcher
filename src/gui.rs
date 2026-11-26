@@ -24,6 +24,7 @@ pub fn run_window() {
             WindowOptions {
                 window_bounds: Some(WindowBounds::Windowed(bounds)),
                 //titlebar: Option<TitlebarOptions>,
+                //A LOT more window options to choose from, i'll have a look later.
                 ..Default::default()
             },
             |_, cx| {
