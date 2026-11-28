@@ -1,4 +1,4 @@
-use context_menu_switcher::gui;
+use context_menu_switcher::test_gui;
 use std::{process::Command, *};
 use windows_version::*;
 use winreg::{RegKey, enums::HKEY_CURRENT_USER};
@@ -165,7 +165,7 @@ fn main() -> io::Result<()> {
                 continue;
             }
             MenuChoices::DrawWindow => {
-                gui::run_window();
+                test_gui::run_window();
                 input.clear();
                 continue;
             }
